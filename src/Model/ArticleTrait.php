@@ -220,6 +220,16 @@ trait ArticleTrait
     protected $features = [];
 
     /**
+     * Assigned Articles of an Addon-Article.
+     *
+     * @var string
+     *
+     * @JMS\Type("string")
+     * @JMS\SerializedName("ASSIGNED_ARTICLES")
+     */
+    protected $assignedArticles;
+
+    /**
      * Get the article number.
      *
      * @return integer
@@ -715,5 +725,26 @@ trait ArticleTrait
     public function addFeature(Feature $feature)
     {
         $this->features[] = $feature;
+    }
+
+    /**
+     * @return array<int>
+     */
+    public function getAssignedArticles()
+    {
+        $articleIds = explode(',', $this->assignedArticles);
+
+        return array_map('trim', $articleIds);
+    }
+
+    /**
+     * @param array $assignedArticles
+     * @return $this
+     */
+    public function setAssignedArticles(array $assignedArticles)
+    {
+        $this->assignedArticles = implode(', ', $assignedArticles);
+
+        return $this;
     }
 }
